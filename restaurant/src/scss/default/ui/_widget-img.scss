@@ -1,0 +1,30 @@
+.widget-img {
+	overflow: hidden;
+	width: remA(40px);
+	height: remA(40px);
+	line-height: remA(40px);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	
+	&.widget-img-xl {
+		width: remA(80px);
+		height: remA(80px);
+		line-height: remA(80px);
+	}
+	&.widget-img-lg {
+		width: remA(60px);
+		height: remA(60px);
+		line-height: remA(60px);
+	}
+	&.widget-img-sm {
+		width: remA(30px);
+		height: remA(30px);
+		line-height: remA(30px);
+	}
+	&.widget-img-xs {
+		width: remA(20px);
+		height: remA(20px);
+		line-height: remA(20px);
+	}
+}
