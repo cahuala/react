@@ -48,7 +48,7 @@ function App() {
     setLettersUsed((prevState)=>[...prevState,{value: letter, correct}])
     setScore(currentScore)
     setLetter('')
-    if(correct){
+    if(!correct){
       setShake(true)
       setTimeout(() => {
         setShake(false)
