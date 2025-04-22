@@ -11,7 +11,7 @@ import { Tip } from './components/Tip';
 import { useEffect, useState } from 'react';
 
 
-const ATTEMPS_MARGIN =5
+const ATTEMP_LIMIT =10
 function App() {
   const [score, setScore] = useState(0)
   const [letter, setLetter] = useState("")
@@ -81,8 +81,7 @@ function App() {
       if(score === challenge.word.length){
         return endGame("Parabéns, você descobriu a palavra!")
       }
-      const attempslimit = challenge.word.length + ATTEMPS_MARGIN
-      if(lettersUsed.length === attempslimit){
+      else if(lettersUsed.length === ATTEMP_LIMIT){
         return endGame("Que pena, você usou todas as tentativas")
       }
     },200)
@@ -94,8 +93,9 @@ function App() {
   return (
     <div className={styles.container}>
       <main>
-        <Header current={lettersUsed.length} max={challenge.word.length + ATTEMPS_MARGIN} 
-        onRestart={handleRestartGame}/>
+        <Header current={lettersUsed.length} 
+        
+        max={ATTEMP_LIMIT}  onRestart={handleRestartGame}/>
         <Tip tip={challenge.tip} />
         <div className={`${styles.word} ${shake && styles.shake}`}>
           {
