@@ -77,7 +77,7 @@ function App() {
     if(!challenge){
       return
     }
-    setInterval(()=>{
+    setTimeout(()=>{
       if(score === challenge.word.length){
         return endGame("Parabéns, você descobriu a palavra!")
       }
@@ -85,7 +85,7 @@ function App() {
       if(lettersUsed.length === attempslimit){
         return endGame("Que pena, você usou todas as tentativas")
       }
-    })
+    },200)
   },[score,lettersUsed.length])
   if (!challenge) {
     return 
