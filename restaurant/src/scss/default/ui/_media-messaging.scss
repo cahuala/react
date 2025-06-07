@@ -1,0 +1,19 @@
+.media-messaging {
+	& .media {
+		padding: remA(15px);
+		
+		& + .media {
+			margin-top: 0;
+			padding-top: remA(15px);
+		}
+		&:first-child {
+			padding-top: 0;
+		}
+		&:last-child {
+			padding-bottom: 0;
+		}
+		& p {
+			margin: 0;
+		}
+	}
+}

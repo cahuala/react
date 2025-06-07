@@ -1,0 +1,99 @@
+.dropdown-menu {
+	box-shadow: $dropdown-box-shadow;
+	
+	@if $enable-rtl {
+		text-align: right;
+	}
+	
+	& .dropdown-item {
+		font-weight: $dropdown-font-weight;
+	}
+	
+	&.media-list {
+		max-width: remA(360px);
+		padding: 0;
+		
+		& .media {
+			border-top: 1px solid rgba(var(--#{$prefix}component-color-rgb), .1);
+			border-bottom: 1px solid rgba(var(--#{$prefix}component-color-rgb), .1);
+			display: flex;
+			
+			& .media-object {
+				height: remA(48px);
+				width: remA(48px);
+				line-height: remA(48px);
+				font-size: remA(24px);
+				color: $white;
+				text-align: center;
+				border-radius: $border-radius-lg;
+				display: block;
+			}
+			& .media-object-icon {
+				position: absolute;
+				border: remA(3px) solid var(--#{$prefix}component-dropdown-bg);
+				background: var(--#{$prefix}component-dropdown-bg);
+				margin-top: remA(-11px);
+				display: block;
+				width: remA(21px);
+				height: remA(21px);
+				text-align: center;
+				font-size: remA(16px);
+				line-height: remA(16px);
+				text-align: center;
+				border-radius: $border-radius * 10;
+				
+				@if $enable-rtl {
+					margin-right: remA(30px);
+				} @else {
+					margin-left: remA(30px);
+				}
+			}
+			& .media-left {
+				@if $enable-rtl {
+					padding-left: remA(12px);
+				} @else {
+					padding-right: remA(12px);
+				}
+			}
+			& .media-right {
+				@if $enable-rtl {
+					padding-left: 0;
+					padding-right: remA(12px);
+				} @else {
+					padding-left: remA(12px);
+				}
+			}
+			& .media-heading {
+				color: var(--#{$prefix}component-color);
+				margin-bottom: 0;
+				font-size: remA(12.5px);
+				line-height: remA(18px);
+			}
+			& p {
+				text-overflow: ellipsis;
+				overflow: hidden;
+				margin-bottom: remA(5px);
+				line-height: remA(14px);
+				max-width: remA(270px);
+				color: rgba(var(--#{$prefix}component-color-rgb), .65);
+				font-size: remA(11px);
+			}
+			& + .media {
+				border-top: none;
+			}
+		}
+		& .dropdown-header {
+			font-weight: $font-weight-bolder;
+			color: $dropdown-header-color;
+			font-size: $dropdown-header-font-size;
+			background: $dropdown-header-bg;
+			padding: $spacer * 0.66 $spacer;
+		}
+		& .dropdown-item {
+			padding: $spacer * 0.66 $spacer;
+		}
+		& .dropdown-footer { 
+			padding: $spacer * 0.66 $spacer;
+		}
+	}
+}
