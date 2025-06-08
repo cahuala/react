@@ -27,6 +27,7 @@ export default class GameResult {
     }
 
     hasCell(row: number, col: number): boolean {
-        return this.winningMove.find((cell) => cell.row === row && cell.column === col);
-    }   
+    return this.winningMove.find((cell) => cell.row === row && cell.column === col) !== undefined;
+}
+    
 }

@@ -48,7 +48,9 @@ export default class Game{
         const board = this.board.set(row, col, this.currentPlayer.type);
         const result = this.calculateResult(board);
         const [player1, player2] = this.players(result) 
-
+        if (!player1 || !player2) {
+            throw new Error("Jogadores inválidos");
+            }
         return new Game(
             player1,
             player2,
