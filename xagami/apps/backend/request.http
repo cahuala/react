@@ -1,0 +1,58 @@
+GET http://localhost:4000/ping
+###
+POST http://localhost:4000/auth/login
+###
+POST http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+    "name":"Pedro Gaspar Francisco",
+    "email":"pgf@noove.com.ao",
+    "password":"#Senha123",
+    "telefone":"(244) 934903730",
+    "barbeiro": false
+}
+
+###
+POST http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+    "email":"pgf@noove.com.ao",
+    "password":"#Senha123"
+}
+###
+GET http://localhost:4000/scheduling
+
+###
+GET http://localhost:4000/professional
+
+###
+GET http://localhost:4000/service
+
+###
+POST http://localhost:4000/scheduling
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJGcmFuY2lzY28gTW9udGVpcm8iLCJlbWFpbCI6ImNhaHVhbGEzMUBnbWFpbC5jb20iLCJ0ZWxlZm9uZSI6IigyNDQpIDkzNDkwMzczMCIsImJhcmJlaXJvIjpmYWxzZSwiaWF0IjoxNzUwNjkxODk5LCJleHAiOjE3NTA5NTEwOTl9.e4e6ajCncf_ggQgYBRY5MyVDEuli6hLD0lIivbMv4K8
+Content-Type: application/json
+
+{
+    "data": "2025-10-01T13:00:00.000Z",
+    "user":{"id": 13},
+    "professional": {"id": 3},
+    "services":[
+        {"id": 1},
+        {"id": 2}
+    ]
+}
+
+###
+GET http://localhost:4000/scheduling
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJGcmFuY2lzY28gTW9udGVpcm8iLCJlbWFpbCI6ImNhaHVhbGEzMUBnbWFpbC5jb20iLCJ0ZWxlZm9uZSI6IigyNDQpIDkzNDkwMzczMCIsImJhcmJlaXJvIjpmYWxzZSwiaWF0IjoxNzUwNjkxODk5LCJleHAiOjE3NTA5NTEwOTl9.e4e6ajCncf_ggQgYBRY5MyVDEuli6hLD0lIivbMv4K8
+
+###
+GET http://localhost:4000/scheduling/3/2025-10-01
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJGcmFuY2lzY28gTW9udGVpcm8iLCJlbWFpbCI6ImNhaHVhbGEzMUBnbWFpbC5jb20iLCJ0ZWxlZm9uZSI6IigyNDQpIDkzNDkwMzczMCIsImJhcmJlaXJvIjpmYWxzZSwiaWF0IjoxNzUwNjkxODk5LCJleHAiOjE3NTA5NTEwOTl9.e4e6ajCncf_ggQgYBRY5MyVDEuli6hLD0lIivbMv4K8
+
+###
+DELETE http://localhost:4000/scheduling/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJGcmFuY2lzY28gTW9udGVpcm8iLCJlbWFpbCI6ImNhaHVhbGEzMUBnbWFpbC5jb20iLCJ0ZWxlZm9uZSI6IigyNDQpIDkzNDkwMzczMCIsImJhcmJlaXJvIjpmYWxzZSwiaWF0IjoxNzUwNjkxODk5LCJleHAiOjE3NTA5NTEwOTl9.e4e6ajCncf_ggQgYBRY5MyVDEuli6hLD0lIivbMv4K8
