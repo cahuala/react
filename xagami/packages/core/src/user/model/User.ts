@@ -1,8 +1,8 @@
 export default interface User{
-  id?:number
+  id:string
   name:string
   email:string
   password?: string
   telefone?: string
-  barbeiro?: boolean
+  tipo?: 'PARTICULAR' | 'EMPRESARIAL' | 'PRESTADOR'; // string literal union
 }

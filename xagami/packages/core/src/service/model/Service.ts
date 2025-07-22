@@ -1,5 +1,5 @@
 export default interface Service {
-    id:number
+    id:string
     name: string
     description: string
     price: number

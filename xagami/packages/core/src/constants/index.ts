@@ -1,6 +1,6 @@
 import clients from './clients'
-import profissionais from './profissionais'
+import hotels from './hotels'
 import service from './services'
 import logistica from './logistica'
 
-export { clients, profissionais, service,logistica }
+export { clients, hotels, service,logistica }

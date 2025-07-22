@@ -44,7 +44,7 @@ body {
     @apply border border-zinc-500 text-white px-4 py-2 rounded;
   }
   .input{
-    @apply bg-zinc-700 px-4 py-3 rounded;
+    @apply bg-white text-black px-4 py-3 rounded w-full border-none outline-none;
     color-scheme: dark ;
   }
 }

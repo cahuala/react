@@ -18,7 +18,7 @@ export default function useFormAuth(){
         useEffect(() => {
             if(user?.email){
                 const destination = param.get('destination') as string
-                router.push(destination ? destination :'/')
+                router.push(destination ? destination :'/dashboard/client')
             }
         },[user, router, param])
         function alterMode(){

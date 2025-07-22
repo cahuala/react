@@ -2,9 +2,9 @@ import { IconBrandFacebook, IconBrandInstagram, IconBrandLinkedin, IconBrandWhat
 import Logo from "./Logo";
 
 export default function Footer(){
-    return <footer className="container flex flex-col bg-white text-zinc-600 py-10 gap-10">
-  <div className="flex flex-col md:flex-row items-center md:items-start justify-between text-center gap-5 md:gap-0 md:text-left">
-    <Logo />
+    return <footer className=" flex flex-col bg-white text-zinc-600 py-10 gap-10">
+  <div className="container flex flex-col md:flex-row items-center md:items-start justify-between text-center gap-5 md:gap-0 md:text-left">
+    <Logo color="#000" />
     
     <div className="flex flex-col gap-1">
       <span className="text-2xl font-bold text-zinc-800 pb-2">Sobre</span>

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
+import { TipoUtilizador } from '@prisma/client';
 import { User, RepositoryUser } from '@xagami/core';
 import { PrismaService } from 'src/db/prisma.service';
 
@@ -7,14 +9,35 @@ import { PrismaService } from 'src/db/prisma.service';
 export class UserPrisma implements RepositoryUser {
   constructor(private readonly prisma: PrismaService) {}
   async save(user: User): Promise<void> {
-    await this.prisma.users.upsert({
-      where: { id: user.id ?? -1 },
-      update: user,
-      create: user as any,
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: user.email },
     });
+
+    if (existingUser) {
+      await this.prisma.user.update({
+        where: { email: user.email },
+        data: {
+          name: user.name ?? existingUser.name,
+          telefone: user.telefone ?? existingUser.telefone,
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+          tipo: (user.tipo ?? existingUser.tipo) as TipoUtilizador,
+        },
+      });
+    } else {
+      await this.prisma.user.create({
+        data: {
+          name: user.name,
+          email: user.email,
+          password: user.password ?? '', // pode ser vazio para sociais
+          telefone: user.telefone ?? '',
+          tipo: (user.tipo ?? 'PARTICULAR') as TipoUtilizador,
+        },
+      });
+    }
   }
+
   async searchToEmail(email: string): Promise<User | null> {
-    return this.prisma.users.findUnique({
+    return this.prisma.user.findUnique({
       where: { email },
     });
   }

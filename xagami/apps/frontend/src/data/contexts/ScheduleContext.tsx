@@ -3,16 +3,16 @@
 import { createContext, useState } from 'react';
 import useAPI from '../hooks/useAPI';
 import useSection from '../hooks/useSection';
-import { DateUtils, Profissional, ScheduleUtils, Service } from '@xagami/core';
+import { DateUtils, Hotel, ScheduleUtils, Service } from '@xagami/core';
 import { useRouter } from 'next/navigation';
 
 export interface ScheduleContextProps {
-    professional: Profissional | null;
+    professional: Hotel | null;
     services: Service[];
     date: Date | null;
     dateValited:Date | null;
     selectedService:(sevices:Service[])=> void;
-    selectedProfessional: (professional: Profissional | null) => void;
+    selectedProfessional: (professional: Hotel | null) => void;
     selectedDate: (date: Date | null) => void;
     schedule: () => Promise<void>;
     canSchedule:()=>boolean
@@ -22,7 +22,7 @@ export interface ScheduleContextProps {
 const ScheduleContext = createContext<ScheduleContextProps>({} as any)
 
 export function ScheduleContextProvider(props: any) {
-    const [professional, setProfessional] = useState<Profissional | null>(null);
+    const [professional, setProfessional] = useState<Hotel | null>(null);
         const [services, setServices] = useState<Service[]>([]);
         const [date, setDate] = useState<Date | null>(null);
         const { httpPost } = useAPI()

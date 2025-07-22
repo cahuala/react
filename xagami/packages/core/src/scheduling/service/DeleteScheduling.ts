@@ -15,9 +15,8 @@ export default class DeleteScheduling implements CaseOfUse<Input,void>{
             throw new Error("Scheduling not found");
         }
         const client = scheduling.user.email === user.email;
-        const professional = user.barbeiro;
-
-        if(!client && !professional){
+        
+        if(!client){
             throw new Error("Usuário não autorizado")
         }
         return this.repo.delete(id);

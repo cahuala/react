@@ -8,7 +8,7 @@ interface HeaderWithTitleProps {
 export default function HeaderWithTitle(props: HeaderWithTitleProps) {
     return (
         <div className="relative h-[180px]">
-            <Image src="/banners/principal.webp" fill alt="Barbearia" className="object-cover"/>
+            <Image src="/banners/principal.webp" fill alt="xagami" className="object-cover"/>
             <div className="flex flex-col absolute top-0 left-0 w-full h-full  bg-black/70">
                 <Header/>
                 <div className="container flex flex-col justify-center items-center h-full">

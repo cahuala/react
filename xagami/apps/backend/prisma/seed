@@ -1,0 +1,155 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import {
+  PrismaClient,
+  TipoServico,
+  TipoUtilizador,
+  EstadoSolicitacao,
+  StatusEntrega,
+} from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function seed() {
+  console.log('🔄 Limpando dados anteriores...');
+  await prisma.imagemProdutoEntrega.deleteMany();
+  await prisma.produtoEntrega.deleteMany();
+  await prisma.entrega.deleteMany();
+  await prisma.solicitacao.deleteMany();
+  await prisma.scheduling.deleteMany();
+  await prisma.frotaVeiculo.deleteMany();
+
+  await prisma.prestadorServico.deleteMany();
+  await prisma.clienteEmpresarial.deleteMany();
+  await prisma.clienteParticular.deleteMany();
+
+  const userParticular = await prisma.user.create({
+    data: {
+      name: 'João Silva',
+      email: 'joao@example.com',
+      password: '$2b$10$2beD7U.E7Waxev94U194M.lKT6vTnoPV4Dgh7E9Dmp0dPIycWO72y',
+      telefone: '923456789',
+      tipo: TipoUtilizador.PARTICULAR,
+      clienteParticular: {
+        create: {
+          nomeCompleto: 'João Manuel da Silva',
+          contacto: '923456789',
+          docIdentificacao: '123456789LA034',
+        },
+      },
+    },
+  });
+
+  const userEmpresarial = await prisma.user.create({
+    data: {
+      name: 'Empresa ABC',
+      email: 'empresa@example.com',
+      password: '$2b$10$2beD7U.E7Waxev94U194M.lKT6vTnoPV4Dgh7E9Dmp0dPIycWO72y',
+      telefone: '923987654',
+      tipo: TipoUtilizador.EMPRESARIAL,
+      clienteEmpresarial: {
+        create: {
+          nomeEmpresa: 'Empresa ABC Lda.',
+          NIF: '5001234567',
+          alvara: 'ALV2023XYZ',
+          localizacao: 'Luanda',
+        },
+      },
+    },
+  });
+
+  const userPrestador = await prisma.user.create({
+    data: {
+      name: 'Carlos Transportes',
+      email: 'carlos@transportes.com',
+      password: 'senhaPrestador789',
+      telefone: '922111222',
+      tipo: TipoUtilizador.PRESTADOR,
+      prestadorServico: {
+        create: {
+          nome: 'Carlos Transportes',
+          contacto: '922111222',
+          localizacao: 'Benguela',
+        },
+      },
+    },
+  });
+
+  const [firstHotel] = await prisma.hotel.findMany({ take: 1 });
+  const [firstService] = await prisma.service.findMany({ take: 1 });
+
+  // Agendamento
+  if (firstHotel && firstService) {
+    await prisma.scheduling.create({
+      data: {
+        data: new Date(),
+        userId: userParticular.id,
+        hotelId: firstHotel.id,
+        services: {
+          connect: { id: firstService.id },
+        },
+      },
+    });
+  }
+
+  // Frota de veículos
+  const veiculo = await prisma.frotaVeiculo.create({
+    data: {
+      marca: 'Toyota',
+      modelo: 'Hiace',
+      matricula: 'LD-45-34-BT',
+      prestadorId: userPrestador.id,
+    },
+  });
+
+  // Solicitação
+  const solicitacao = await prisma.solicitacao.create({
+    data: {
+      userId: userParticular.id,
+      tipoServico: TipoServico.ENTREGA,
+      origem: 'Talatona',
+      destino: 'Cazenga',
+      descricao: 'Entrega de documentos urgentes',
+      estado: EstadoSolicitacao.PENDENTE,
+    },
+  });
+
+  // Entrega
+  const entrega = await prisma.entrega.create({
+    data: {
+      solicitacaoId: solicitacao.id,
+      prestadorId: userPrestador.id,
+      dataEntrega: new Date(Date.now() + 86400000), // amanhã
+      status: StatusEntrega.PENDENTE,
+    },
+  });
+
+  // Produto da Entrega com Imagem
+  await prisma.produtoEntrega.create({
+    data: {
+      entregaId: entrega.id,
+      nome: 'Envelope com documentos',
+      descricao: 'Documentos confidenciais',
+      quantidade: 1,
+      pesoKg: 0.2,
+      valor: 5000,
+      fragil: true,
+      imagemUrl:
+        'https://cdnv2.moovin.com.br/marbig/imagens/produtos/original/envelope-saco-kraft-natural-kn25-176x250mm-caixa-com-100-unidades-img-58402_301024233106759.jpg',
+      imagens: {
+        create: [
+          {
+            url: 'https://www.lojadeconvite.com.br/wp-content/uploads/2021/06/Mini-envelope.jpg',
+            legenda: 'Envelope frente',
+          },
+        ],
+      },
+    },
+  });
+
+  console.log('✅ Seed concluído com sucesso!');
+}
+
+seed().finally(() => prisma.$disconnect());

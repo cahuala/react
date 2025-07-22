@@ -1,16 +1,16 @@
 import Image from "next/image";
-import useProfissionais from "@/data/hooks/useProfissionais";
-import { Profissional } from "@xagami/core";
+import useHotels from "@/data/hooks/useHotels";
+import { Hotel } from "@xagami/core";
 
 export interface InputProfessionalProps
   extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "value" | "onChange"> {
   label?: string;
-  value: Profissional | null;
-  onChange: (value: Profissional | null) => void;
+  value: Hotel | null;
+  onChange: (value: Hotel | null) => void;
 }
 function Option(props:{
-  professional: Profissional,
-  professionalChange:(p: Profissional | null) => void, 
+  professional: Hotel,
+  professionalChange:(p: Hotel | null) => void, 
   selected: boolean}) {
     return (
       <button className={`flex flex-col items-center rounded overflow-hidden cursor-pointer border select-none
@@ -28,18 +28,18 @@ function Option(props:{
 
 
 export default function InputProfessional(props: InputProfessionalProps) {
-    const { profissionais } = useProfissionais()  
+    const { hotels } = useHotels()  
     
-    return profissionais ? ( 
+    return hotels ? ( 
       <div className="flex flex-col gap-4">
         { props.label && <span className="text-sm uppercase text-zinc-400">{ props.label }</span> }
         <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 self-start gap-5">
-        {profissionais.map((profissional) => (
+        {hotels.map((hotel) => (
             <Option 
-                key={profissional.id} 
-                professional={profissional} 
+                key={hotel.id} 
+                professional={hotel} 
                 professionalChange={props.onChange} 
-                selected={props.value?.id === profissional.id} 
+                selected={props.value?.id === hotel.id} 
             />
         ))}
 

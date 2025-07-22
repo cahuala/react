@@ -1,5 +1,5 @@
 import useSchedule from "@/data/hooks/useSchedule";
-import { MoedaUtil, Profissional, Service } from "@xagami/core";
+import { MoedaUtil, Hotel, Service } from "@xagami/core";
 import { IconCalendar } from "@tabler/icons-react";
 
  function SummryTitle(){
@@ -42,7 +42,7 @@ export default function Summary(){
     )
 }
 
-function SummaryProfessional(props:{professional: Profissional | null}){
+function SummaryProfessional(props:{professional: Hotel | null}){
     return(
         <div className="flex flex-col gap-3">
             <span className="text-xs uppercase text-zinc-300">Profissional</span>

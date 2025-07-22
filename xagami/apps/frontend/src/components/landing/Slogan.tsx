@@ -9,14 +9,14 @@ export default function Slogan(){
             <div className="flex flex-col items-center absolute top-0 left-0 w-full h-full bg-black/40">
                 <Header/>
                <div className="flex flex-col justify-center items-center flex-1 gap-5">
-  <h1 className="flex flex-col items-center">
-    <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gradient">
-      Xagami
-    </span>
-  </h1>
+              <h1 className="flex flex-col items-center">
+                <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-gradient">
+                  Xagami
+                </span>
+              </h1>
 
   <div className="max-w-3xl px-4">
-    <p className="text-center text-lg sm:text-xl lg:text-2xl font-light text-black-800">
+    <p className="text-center text-white text-lg sm:text-xl lg:text-2xl font-light text-white-800">
       Integramos transporte eficiente com hospedagem de qualidade
       para oferecer a melhor experiência em viagens corporativas e turísticas.
     </p>

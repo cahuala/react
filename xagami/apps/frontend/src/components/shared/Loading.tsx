@@ -11,7 +11,7 @@ export default function Loading(){
                         absolute top-0 left-0 w-full h-full
                         bg-black/85
                     '>
-                        <Logo width={250} height={250}/>
+                        <Logo width={250} height={250} color="#000" />
                         <span className="font-light text-4xl text-zinc-500">Processando...</span>
                     </div>
                 </div>

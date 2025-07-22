@@ -3,39 +3,46 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
-model users {
-  id          Int          @id @default(autoincrement())
-  name        String
-  email       String       @unique
-  password    String
-  telefone    String
-  barbeiro    Boolean
-  schedulings Scheduling[]
+model User {
+  id       String         @id @default(uuid())
+  name     String
+  email    String         @unique
+  password String
+  telefone String
+  tipo     TipoUtilizador @default(PARTICULAR) // 👈 aqui
+
+  schedulings        Scheduling[]
+  clienteParticular  ClienteParticular?
+  clienteEmpresarial ClienteEmpresarial?
+  prestadorServico   PrestadorServico?
+  solicitacoes       Solicitacao[]
 
   @@map("users")
 }
 
-model Professional {
-  id            Int          @id @default(autoincrement())
+model Hotel {
+  id            String       @id @default(uuid())
   name          String
   description   String
   imageUrl      String
-  avaliacao     Float
+  avaliacao     Decimal // <-- alterado
   qtdeAvaliacao Int
+  price         Decimal // <-- alterado
+  location      String
   schedulings   Scheduling[]
 
-  @@map("professionais")
+  @@map("hotels")
 }
 
 model Service {
-  id          Int          @id @default(autoincrement())
+  id          String       @id @default(uuid())
   name        String       @unique
   description String
-  price       Float
+  price       Decimal // <-- alterado
   qtdeSlots   Int
   imagemUrl   String
   schedulings Scheduling[]
@@ -44,13 +51,206 @@ model Service {
 }
 
 model Scheduling {
-  id             Int          @id @default(autoincrement())
-  data           DateTime
-  userId         Int
-  professionalId Int
-  user           users        @relation(fields: [userId], references: [id])
-  professional   Professional @relation(fields: [professionalId], references: [id])
-  services       Service[]
+  id      String   @id @default(uuid()) // alterado de Int para String UUID
+  data    DateTime
+  userId  String
+  hotelId String
+
+  user     User      @relation(fields: [userId], references: [id])
+  hotel    Hotel     @relation(fields: [hotelId], references: [id])
+  services Service[]
 
   @@map("schedulings")
+}
+
+model ClienteParticular {
+  id               String @id
+  nomeCompleto     String
+  contacto         String
+  docIdentificacao String
+
+  user User @relation(fields: [id], references: [id])
+
+  @@map("clientes_particulares")
+}
+
+model ClienteEmpresarial {
+  id          String @id
+  nomeEmpresa String
+  NIF         String @unique
+  alvara      String
+  localizacao String
+
+  user       User              @relation(fields: [id], references: [id])
+  frota      FrotaVeiculo[]
+  contactos  ContactoEmpresa[]
+  documentos DocumentoLegal[]
+
+  @@map("clientes_empresariais")
+}
+
+model ContactoEmpresa {
+  id                   String @id @default(uuid())
+  clienteEmpresarialId String
+  numero               String
+
+  clienteEmpresarial ClienteEmpresarial @relation(fields: [clienteEmpresarialId], references: [id])
+
+  @@map("contactos_empresas")
+}
+
+model DocumentoLegal {
+  id                   String @id @default(uuid())
+  clienteEmpresarialId String
+  nomeArquivo          String
+
+  clienteEmpresarial ClienteEmpresarial @relation(fields: [clienteEmpresarialId], references: [id])
+
+  @@map("documentos_legais")
+}
+
+model PrestadorServico {
+  id          String @id
+  nome        String
+  contacto    String
+  localizacao String
+
+  user       User                 @relation(fields: [id], references: [id])
+  documentos DocumentoPrestador[]
+  veiculos   FrotaVeiculo[]
+  entregas   Entrega[]
+
+  @@map("prestadores_servico")
+}
+
+model DocumentoPrestador {
+  id          String @id @default(uuid())
+  prestadorId String
+  nomeArquivo String
+
+  prestador PrestadorServico @relation(fields: [prestadorId], references: [id])
+
+  @@map("documentos_do_prestador")
+}
+
+model FrotaVeiculo {
+  id                   String  @id @default(uuid())
+  marca                String
+  modelo               String
+  matricula            String  @unique
+  prestadorId          String?
+  clienteEmpresarialId String?
+
+  prestador          PrestadorServico?   @relation(fields: [prestadorId], references: [id])
+  clienteEmpresarial ClienteEmpresarial? @relation(fields: [clienteEmpresarialId], references: [id])
+  imagens            ImagemVeiculo[]
+  documentos         DocumentoVeiculo[]
+
+  @@map("frotas_veiculo")
+}
+
+model ImagemVeiculo {
+  id        String  @id @default(uuid())
+  veiculoId String
+  url       String
+  legenda   String?
+
+  veiculo FrotaVeiculo @relation(fields: [veiculoId], references: [id])
+
+  @@map("imagens_veiculos")
+}
+
+model DocumentoVeiculo {
+  id         String    @id @default(uuid())
+  veiculoId  String
+  nome       String
+  urlArquivo String
+  validade   DateTime?
+
+  veiculo FrotaVeiculo @relation(fields: [veiculoId], references: [id])
+
+  @@map("documentos_veiculos")
+}
+
+model Solicitacao {
+  id              String             @id @default(uuid())
+  userId          string
+  tipoServico     TipoServico
+  origem          String
+  destino         String
+  descricao       String
+  dataSolicitacao DateTime          @default(now())
+  estado          EstadoSolicitacao
+
+  user     User      @relation(fields: [userId], references: [id])
+  entregas Entrega[]
+
+  @@map("solicitacoes")
+}
+
+model Entrega {
+  id            String        @id @default(uuid())
+  solicitacaoId String
+  prestadorId   String?
+  dataEntrega   DateTime?
+  status        StatusEntrega
+
+  solicitacao    Solicitacao       @relation(fields: [solicitacaoId], references: [id])
+  prestador      PrestadorServico? @relation(fields: [prestadorId], references: [id])
+  ProdutoEntrega ProdutoEntrega[]
+
+  @@map("entregas")
+}
+
+model ProdutoEntrega {
+  id         String  @id @default(uuid())
+  entregaId  String
+  nome       String
+  descricao  String?
+  quantidade Int
+  pesoKg     Float?
+  valor      Float?
+  fragil     Boolean @default(false)
+  imagemUrl  String?
+
+  entrega Entrega                @relation(fields: [entregaId], references: [id])
+  imagens ImagemProdutoEntrega[]
+
+  @@map("produtos_entregas")
+}
+
+model ImagemProdutoEntrega {
+  id               String  @id @default(uuid())
+  produtoEntregaId String
+  url              String
+  legenda          String?
+
+  produto ProdutoEntrega @relation(fields: [produtoEntregaId], references: [id])
+
+  @@map("imagens_produtos_entregas")
+}
+
+enum TipoUtilizador {
+  PARTICULAR  @map("particular")
+  EMPRESARIAL @map("empresarial")
+  PRESTADOR   @map("prestador")
+}
+
+enum TipoServico {
+  ENTREGA @map("entrega")
+  VIAGEM  @map("viagem")
+}
+
+enum EstadoSolicitacao {
+  PENDENTE
+  EM_CURSO
+  CONCLUIDO
+  CANCELADO
+}
+
+enum StatusEntrega {
+  PENDENTE
+  EM_TRANSITO
+  ENTREGUE
+  FALHOU
 }

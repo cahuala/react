@@ -4,14 +4,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Controller, Get } from '@nestjs/common';
 import { ProfessionalPrisma } from './professional.prisma';
-import { SearchProfessional } from '@xagami/core';
+import { SearchHotel } from '@xagami/core';
 
 @Controller('professional')
 export class ProfessionalController {
   constructor(private readonly repo: ProfessionalPrisma) {}
   @Get()
   searchProfessionals() {
-    const caseOfUse = new SearchProfessional(this.repo);
+    const caseOfUse = new SearchHotel(this.repo);
     return caseOfUse.execute();
   }
 }

@@ -42,9 +42,9 @@ export default function MenuUser() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Link href="/scheduling" className="flex items-center gap-2 w-full">
+          <Link href="/dashboard/client" className="flex items-center gap-2 w-full">
             <IconCalendar size={18} />
-            <span>Agendar</span>
+            <span>Dashboard</span>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem

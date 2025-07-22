@@ -1,48 +1,48 @@
 'use client'
-import { Profissional } from "@xagami/core";
+import { Hotel } from "@xagami/core";
 import { MapPin } from 'lucide-react';
 import { IconBrandInstagram, IconBrandLinkedin, IconBrandX, IconBrandYoutube } from "@tabler/icons-react";
 import Image from "next/image";
 import Avaliation from "../shared/Avaliation";
-export interface ItemProfissionalProps {
-    profissional: Profissional
+export interface ItemHotelProps {
+    hotel: Hotel
 }
-export default function ItemProfissional(props: ItemProfissionalProps) {
+export default function ItemHotel(props: ItemHotelProps) {
    
-  const { profissional } = props;
+  const { hotel } = props;
   return (
     <div className="flex flex-col rounded-xl bg-white overflow-hidden shadow-lg max-w-md">
   <div className="relative h-72 w-full">
     <Image
       className="object-cover"
-      src={profissional.imageUrl}
-      alt={profissional.name}
+      src={hotel.imageUrl}
+      alt={hotel.name}
       fill
     />
   </div>
 
   <div className="flex flex-col p-4 gap-5">
     <span className="text-2xl font-black text-zinc-800 truncate">
-      {profissional.name}
+      {hotel.name}
     </span>
 
     {/* Localização */}
     <div className="flex items-center text-sm text-zinc-500 gap-1">
       <MapPin className="w-4 h-4" />
-      <span className="truncate">{profissional.location}</span>
+      <span className="truncate">{hotel.location}</span>
     </div>
 
     {/* Descrição */}
     <p className="text-base text-zinc-600 text-justify line-clamp-3">
-      {profissional.description}
+      {hotel.description}
     </p>
 
     {/* Avaliação */}
-    <Avaliation note={profissional.avaliacao} qtde={profissional.avaliacao} />
+    <Avaliation note={hotel.avaliacao} qtde={hotel.avaliacao} />
 
     {/* Preço */}
     <span className="text-lg font-semibold text-[#3664f4]">
-      {profissional?.price?.toFixed(2)} Kz
+      {hotel?.price?.toFixed(2)} Kz
     </span>
 
     {/* Redes sociais */}

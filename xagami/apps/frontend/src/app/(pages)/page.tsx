@@ -1,4 +1,6 @@
-import NossosProfissionais from "@/components/profissional/NossosProfissionais";
+'use client'
+
+import NossosHotels from "@/components/hotel/NossosHoteis";
 import NossosServices from "@/components/services/NossosServices";
 import SessionBackground from '../../components/shared/SessionBackground';
 import Footer from "@/components/shared/Footer";
@@ -10,6 +12,7 @@ import NossosLogistica from "@/components/logistica/NossosFrotas";
 
 
 export default function Landing() {
+ 
   return (
     <div className="flex flex-col">
       <Slogan/>
@@ -20,13 +23,12 @@ export default function Landing() {
         <NossosServices />
       </SessionBackground>
       <SessionBackground >
-        <NossosProfissionais/>
+        <NossosHotels/>
       </SessionBackground>
       <SessionBackground >
         <NossosLogistica/>
       </SessionBackground>
-      
-      <Footer/>
+      <Footer />
     </div>
   );
 }

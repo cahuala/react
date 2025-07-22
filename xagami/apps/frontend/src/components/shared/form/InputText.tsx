@@ -11,6 +11,6 @@ export default function InputText(props: InputTextProps){
             props.onChangeText?.(e.target.value)
             }}
             placeholder={props.placeholder}
-            className='input' />
+            className='w-full px-4 py-2 border border-gray-300 rounded text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition' />
     )
 }

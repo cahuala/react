@@ -21,7 +21,7 @@ const ContextSection = createContext<ContextSectionProps>({} as any)
 export default ContextSection
 
 export function ProviderSection(props: any){
-    const nameCookie = '_barbabrutal_token'
+    const nameCookie = '_xagami_token'
     const [loading, setLoading] = useState(true)
     const [section, setSection]= useState<Section>({token: null, user: null})
     
@@ -67,7 +67,7 @@ export function ProviderSection(props: any){
                 id: payload.id,
                 name: payload.name,
                 email: payload.email,
-                barbeiro:payload.barbeiro,
+                tipo:payload.tipo,
                 telefone:payload.telefone,
 
             }}
