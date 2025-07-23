@@ -1,15 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-function-type */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile } from 'passport-facebook';
 import { Injectable } from '@nestjs/common';
-import { AuthService } from '../auth.service';
+import { UserPrisma } from './user.prisma';
+import { User } from '@xagami/core';
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
-  constructor(private authService: AuthService) {
+  constructor(private authService: UserPrisma) {
     super({
       clientID: process.env.FACEBOOK_APP_ID,
       clientSecret: process.env.FACEBOOK_APP_SECRET,
@@ -24,12 +23,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     profile: Profile,
     done: Function,
   ) {
-    const { name, emails, photos } = profile;
-    const user = await this.authService.validateOAuthLogin(
-      emails[0].value,
-      `${name.givenName} ${name.familyName}`,
-      photos[0].value,
-    );
+    const user = await this.authService.save(profile as User);
     done(null, user);
   }
 }
