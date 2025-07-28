@@ -1,7 +1,7 @@
 import Request from "../model/Request"
 
 export default interface RepositoryRequest{
-    save(order: Request): Promise<void>
+    save(order: Request): Promise<string>
     searchToEmail(email: string): Promise<Request[]>
     searchToName(name: String): Promise<Request[]>
     searchToId(id: string): Promise<Request | null>

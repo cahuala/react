@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -6,11 +7,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/db/prisma.service';
 
 @Injectable()
-export class EntregasService implements RepositoryRequest {
+export class EntregasPrisma implements RepositoryRequest {
   constructor(private readonly prisma: PrismaService) {}
-  async save(order: Request): Promise<void> {
+  async save(order: Request): Promise<string> {
     try {
-      await this.prisma.solicitacao.upsert({
+      const entrega: any = await this.prisma.solicitacao.upsert({
         where: { id: order.id ?? '' },
         create: {
           origem: order.origem,
@@ -19,6 +20,9 @@ export class EntregasService implements RepositoryRequest {
           descricao: order.descricao,
           estado: order.estado as any,
           user: { connect: { id: order.user.id } },
+        },
+        select: {
+          id: true,
         },
         update: {
           origem: order.origem,
@@ -29,7 +33,9 @@ export class EntregasService implements RepositoryRequest {
           user: { connect: { id: order.user.id } },
         },
       });
+      return entrega;
     } catch (error: any) {
+      console.log(error);
       throw new Error('Method not implemented.', error);
     }
   }

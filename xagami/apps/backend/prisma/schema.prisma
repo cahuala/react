@@ -174,7 +174,7 @@ model DocumentoVeiculo {
 
 model Solicitacao {
   id              String             @id @default(uuid())
-  userId          string
+  userId          String
   tipoServico     TipoServico
   origem          String
   destino         String

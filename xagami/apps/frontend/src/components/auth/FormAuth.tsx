@@ -18,7 +18,6 @@ import 'swiper/css/autoplay'
 // Ícones
 import {
   FaGoogle,
-  FaGithub,
   FaFacebook,
   FaInstagram,
 } from 'react-icons/fa'
@@ -94,18 +93,15 @@ export default function FormAuth() {
 
             {/* Redes sociais */}
             <div className="mt-4 flex flex-col gap-3">
-              <button className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
+              <a href="http://localhost:3000/auth/google" className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
                 <FaGoogle className="w-5 h-5 text-red-500" />
                 Entrar com Google
-              </button>
-              <button className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
-                <FaGithub className="w-5 h-5 text-gray-800" />
-                Entrar com GitHub
-              </button>
-              <button className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
+              </a>
+             
+              <a href="http://localhost:3000/auth/facebook" className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
                 <FaFacebook className="w-5 h-5 text-blue-600" />
                 Entrar com Facebook
-              </button>
+              </a>
               <button className="flex items-center justify-center gap-2 border border-gray-300 rounded py-2 hover:bg-gray-100 transition text-sm text-gray-700">
                 <FaInstagram className="w-5 h-5 text-pink-600" />
                 Entrar com Instagram

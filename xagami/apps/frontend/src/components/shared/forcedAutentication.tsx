@@ -10,7 +10,7 @@ export function ForceAutentication(props: any){
     const path = usePathname()
     if(loading && !user?.email) return <Loading/>
     if(!user?.email){
-        router.push(`/login?destination=${path}`)
+        router?.push(`/login?destination=${path}`)
         return <Loading/>
     }
     return props.children

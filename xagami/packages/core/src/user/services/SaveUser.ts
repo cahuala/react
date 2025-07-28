@@ -3,13 +3,15 @@ import User from "../model/User";
 import ProviderCrypto from "../provider/ProviderCrypto";
 import RepositoryUser from "../provider/RepositoryUser";
 
-
-export default class SaveUser implements CaseOfUse<User, void>{
+type Id={
+    id: string
+}
+export default class SaveUser implements CaseOfUse<User, Id>{
     constructor(
         private readonly repo:RepositoryUser,
         private readonly cypto: ProviderCrypto
     ){}
-    async execute(user: User): Promise<any> {
+    async execute(user: User): Promise<Id> {
         const userExist = await this.repo.searchToEmail(user.email);
         if (userExist) {
         throw new Error('Usuário já existe');
@@ -25,6 +27,7 @@ export default class SaveUser implements CaseOfUse<User, void>{
             password: passwordCrypto,
             barbeiro: false
         }
-        await this.repo.save(newUser);
+       let result: any= await this.repo.save(newUser);
+       return result;
     }
 }

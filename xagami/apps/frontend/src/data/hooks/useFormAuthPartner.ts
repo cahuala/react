@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import useAPI from "./useAPI";
 import useSection from "./useSection";
@@ -34,7 +32,7 @@ export default function useFormAuth(){
                startSection(token)
         }
         async function register(){
-           const userId:any = await httpPost('auth/register',{
+            await httpPost('auth/register',{
                     name, email, password, telefone
                  })
         }

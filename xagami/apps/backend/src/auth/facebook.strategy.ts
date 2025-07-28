@@ -1,19 +1,20 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// src/auth/facebook.strategy.ts
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile } from 'passport-facebook';
-import { Injectable } from '@nestjs/common';
-import { UserPrisma } from './user.prisma';
-import { User } from '@xagami/core';
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
-  constructor(private authService: UserPrisma) {
+  constructor() {
     super({
-      clientID: process.env.FACEBOOK_APP_ID,
-      clientSecret: process.env.FACEBOOK_APP_SECRET,
-      callbackURL: 'http://localhost:3000/auth/facebook/callback',
-      profileFields: ['emails', 'name', 'photos'],
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      callbackURL: 'http://localhost:3000/auth/facebook/redirect',
+      profileFields: ['id', 'emails', 'name', 'displayName'],
     });
   }
 
@@ -21,9 +22,11 @@ export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
     accessToken: string,
     refreshToken: string,
     profile: Profile,
-    done: Function,
-  ) {
-    const user = await this.authService.save(profile as User);
-    done(null, user);
+  ): Promise<any> {
+    const { name, emails } = profile;
+    return {
+      email: emails?.[0]?.value,
+      name: name?.givenName + ' ' + name?.familyName,
+    };
   }
 }

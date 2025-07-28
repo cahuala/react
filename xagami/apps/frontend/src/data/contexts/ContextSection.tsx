@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import { createContext, useCallback, useEffect, useState } from "react"
@@ -50,8 +51,12 @@ export function ProviderSection(props: any){
         setSection({ token: null, user: null })
     }
     function getSection():Section{
-        const token = cookie.get(nameCookie)
+        const params = new URLSearchParams(window.location.search)
+        let token = params.get('token')
 
+        if (!token) {
+            token = cookie.get(nameCookie) || null
+        }
         if(!token){
             return { token: null,user:null }
         }
