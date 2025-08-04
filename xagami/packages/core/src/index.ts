@@ -6,4 +6,5 @@ export * from './scheduling'
 export * from './utils'
 export * from './logistica'
 export * from './request'
+export * from './userpartner'
 
