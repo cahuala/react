@@ -2,7 +2,7 @@
 'use client'
 
 import Logo from '../shared/Logo'
-import useFormAuth from '@/data/hooks/useFormAuth'
+import useFormAuth from '@/data/hooks/useFormAuthPartner'
 import InputPassword from '../shared/form/InputPassword'
 import InputText from '../shared/form/InputText'
 import InputTelefone from '../shared/form/InputTelefone'

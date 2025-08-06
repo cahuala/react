@@ -37,6 +37,9 @@ export default function useFormAuth(){
            const userId:any = await httpPost('auth/register',{
                     name, email, password, telefone
                  })
+                await httpPost('auth/userpartner',{
+                    id:userId,nomeCompleto:name, contacto:telefone,
+                })
         }
         async function submeter(){
             if(mode==='login'){
