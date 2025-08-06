@@ -8,7 +8,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "types": [], // limpa os tipos herdados
-    "typeRoots": ["./types", "../../node_modules/@types"]
+    "typeRoots": ["./types", "../../node_modules/@types"],
+     "paths": {
+      "@xagami/core": ["packages/core/src/*"]
+    }
+
     
   }
 }
