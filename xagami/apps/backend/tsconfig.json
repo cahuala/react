@@ -18,6 +18,9 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "types": ["node"],
+    "paths": {
+      "nest": ["apps/backend/src/nest"]
+    }
     // ✅ certifique-se de que NÃO exista a linha: "types": ["tailwindcss"]
   },
   "include": ["src"]
